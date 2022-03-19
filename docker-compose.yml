@@ -1,23 +1,23 @@
 services:
+
   postgres:
     container_name: postgres
     image: postgres
-    # todo generate empty databases with service names
+    #    restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      PGDATA: /data/postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     volumes:
-      - postgres:/data/postgres
+      - ./docker_postrgres_init.sql:/docker-entrypoint-initdb.d/docker_postrgres_init.sql
     ports:
       - "5432:5432"
     networks:
       - postgres
-#    restart: always
 
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
+    #    restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
@@ -28,7 +28,7 @@ services:
       - "5050:80"
     networks:
       - postgres
-#    restart: always
+
 
   zipkin:
     image: openzipkin/zipkin
@@ -77,10 +77,9 @@ networks:
   spring:
     driver: bridge
 
-#volumes:
-#  postgres:
-#  pgadmin:
-#  zookeeper_data:
-#    driver: local
-#  kafka_data:
-#    driver: local
+volumes:
+  pgadmin:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local
