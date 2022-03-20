@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@EnableFeignClients(
-        basePackages = "ru.gontarenko.feignclients"
-)
+@EnableFeignClients(basePackages = "ru.gontarenko.feignclients")
 @EnableEurekaClient
 @SpringBootApplication
 public class WebGatewayApplication {

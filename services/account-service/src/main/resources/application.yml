@@ -1,5 +1,7 @@
 server:
   port: 8081
+  error:
+    include-message: always
 
 spring:
   application:
@@ -20,7 +22,6 @@ spring:
       show-sql: true
     flyway:
       enabled: true
-
 
 eureka:
   client:
