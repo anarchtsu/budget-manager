@@ -25,7 +25,7 @@ public class AccountController implements AccountClient {
     @Override
     public AccountDto getByEmail(String email) {
         val account = repository.findByEmail(email)
-                .orElseThrow(() -> new AccountNotFoundException("Account with email " + email + " not found"));
+                .orElseThrow(() -> new AccountNotFoundException(email));
         return mapper.dto(account);
     }
 
