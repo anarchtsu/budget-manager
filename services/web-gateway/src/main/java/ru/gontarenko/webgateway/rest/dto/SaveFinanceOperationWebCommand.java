@@ -11,8 +11,7 @@ import java.time.LocalDate;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class FinanceOperationWebDto {
-    Long id;
+public class SaveFinanceOperationWebCommand {
     LocalDate date;
     String currencyCode;
     BigDecimal amount;

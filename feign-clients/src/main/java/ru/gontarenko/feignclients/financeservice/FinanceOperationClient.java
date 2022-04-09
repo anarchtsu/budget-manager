@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.gontarenko.feignclients.financeservice.dto.FinanceOperationDto;
+import ru.gontarenko.feignclients.financeservice.dto.SaveFinanceOperationCommand;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,12 +30,12 @@ public interface FinanceOperationClient {
     );
 
     @PostMapping
-    FinanceOperationDto create(@RequestBody FinanceOperationDto dto);
+    FinanceOperationDto create(@RequestBody SaveFinanceOperationCommand command);
 
     @PutMapping("{id}")
     FinanceOperationDto update(
             @PathVariable(value = "id") Long id,
-            @RequestBody FinanceOperationDto dto
+            @RequestBody SaveFinanceOperationCommand command
     );
 
     @DeleteMapping("{id}")

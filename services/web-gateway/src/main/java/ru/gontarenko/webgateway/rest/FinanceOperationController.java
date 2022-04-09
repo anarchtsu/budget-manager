@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.gontarenko.feignclients.financeservice.FinanceOperationClient;
-import ru.gontarenko.webgateway.rest.dto.FinanceOperationWebDto;
+import ru.gontarenko.feignclients.financeservice.dto.FinanceOperationDto;
+import ru.gontarenko.webgateway.rest.dto.SaveFinanceOperationWebCommand;
 import ru.gontarenko.webgateway.rest.mapper.FinanceOperationWebMapper;
 import ru.gontarenko.webgateway.security.AuthorizedAccount;
 
@@ -31,30 +32,30 @@ public class FinanceOperationController {
     FinanceOperationWebMapper mapper;
 
     @GetMapping
-    List<FinanceOperationWebDto> getAll() {
-        return mapper.dtos(client.getAllByAccountId(AuthorizedAccount.getId()));
+    List<FinanceOperationDto> getAll() {
+        return client.getAllByAccountId(AuthorizedAccount.getId());
     }
 
     @GetMapping(params = {"dateFrom", "dateTo"})
-    List<FinanceOperationWebDto> getAllByDateBetweenAndAccountId(
+    List<FinanceOperationDto> getAllByDateBetween(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo
     ) {
-        return mapper.dtos(client.getAllByDateBetweenAndAccountId(dateFrom, dateTo, AuthorizedAccount.getId()));
+        return client.getAllByDateBetweenAndAccountId(dateFrom, dateTo, AuthorizedAccount.getId());
     }
 
     @PostMapping
-    FinanceOperationWebDto create(@RequestBody FinanceOperationWebDto dto) {
-        val command = mapper.command(dto);
+    FinanceOperationDto create(@RequestBody SaveFinanceOperationWebCommand webCommand) {
+        val command = mapper.command(webCommand);
         command.setAccountId(AuthorizedAccount.getId());
-        return mapper.dto(client.create(command));
+        return client.create(command);
     }
 
     @PutMapping("{id}")
-    FinanceOperationWebDto update(@PathVariable Long id, @RequestBody FinanceOperationWebDto dto) {
-        val command = mapper.command(dto);
+    FinanceOperationDto update(@PathVariable Long id, @RequestBody SaveFinanceOperationWebCommand webCommand) {
+        val command = mapper.command(webCommand);
         command.setAccountId(AuthorizedAccount.getId());
-        return mapper.dto(client.update(id, command));
+        return client.update(id, command);
     }
 
     @DeleteMapping("{id}")
