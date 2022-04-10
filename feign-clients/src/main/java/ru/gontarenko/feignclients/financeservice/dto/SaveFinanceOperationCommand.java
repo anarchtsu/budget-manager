@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class SaveFinanceOperationCommand {
     Integer accountId;
     LocalDate date;
-    String currencyCode;
+    Integer currencyId;
     BigDecimal amount;
     FinanceOperationType type;
     Period period;

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SaveFinanceOperationWebCommand {
     LocalDate date;
-    String currencyCode;
+    Integer currencyId;
     BigDecimal amount;
     FinanceOperationType type;
     Period period;

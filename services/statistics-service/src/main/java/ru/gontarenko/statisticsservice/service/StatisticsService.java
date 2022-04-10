@@ -74,14 +74,6 @@ public class StatisticsService {
                 .flatMap(Collection::stream)
                 .map(StatisticItem.class::cast)
                 .collect(Collectors.toList());
-        val incomesAmount = statisticItems.stream()
-                .filter(StatisticItem::isIncome)
-                .map(StatisticItem::getAmount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        val expensesAmount = statisticItems.stream()
-                .filter(not(StatisticItem::isIncome))
-                .map(StatisticItem::getAmount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
         val dailyStatistics = statisticItems.stream()
                 .collect(Collectors.groupingBy(StatisticItem::getDate))
                 .entrySet().stream()
@@ -109,6 +101,12 @@ public class StatisticsService {
                 })
                 .sorted(Comparator.comparing(DailyStatistic::getDate))
                 .toList();
+        val incomesAmount = dailyStatistics.stream()
+                .map(DailyStatistic::getIncomesAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        val expensesAmount = dailyStatistics.stream()
+                .map(DailyStatistic::getExpensesAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
         val statistics = new StatisticsDto();
         statistics.setIncomesAmount(incomesAmount);
         statistics.setExpensesAmount(expensesAmount);

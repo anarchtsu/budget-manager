@@ -32,8 +32,8 @@ public abstract class FinanceOperationMapper {
     public void update(FinanceOperation financeOperation, SaveFinanceOperationCommand command) {
         val category = categoryRepository.findByName(command.getCategoryName())
                 .orElse(new Category(command.getCategoryName()));
-        val currency = currencyRepository.findByCode(command.getCurrencyCode())
-                .orElseThrow(() -> new ConstraintViolationException("Currency not found, code: " + command.getCurrencyCode(), null));
+        val currency = currencyRepository.findById(command.getCurrencyId())
+                .orElseThrow(() -> new ConstraintViolationException("Currency not found, id: " + command.getCurrencyId(), null));
         update(financeOperation, command, category, currency);
     }
 

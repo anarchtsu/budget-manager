@@ -12,7 +12,6 @@ import ru.gontarenko.financeservice.mapper.FinanceOperationMapper;
 import ru.gontarenko.financeservice.repository.FinanceOperationRepository;
 import ru.gontarenko.financeservice.service.FinanceOperationService;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -27,11 +26,6 @@ public class FinanceOperationController implements FinanceOperationClient {
     @Override
     public List<FinanceOperationDto> getAllByAccountId(Integer accountId) {
         return mapper.dtos(repository.findByAccountId(accountId));
-    }
-
-    @Override
-    public List<FinanceOperationDto> getAllByDateBetweenAndAccountId(LocalDate dateFrom, LocalDate dateTo, Integer accountId) {
-        return mapper.dtos(repository.findByDateBetweenAndAccountId(dateFrom, dateTo, accountId));
     }
 
     @Override
