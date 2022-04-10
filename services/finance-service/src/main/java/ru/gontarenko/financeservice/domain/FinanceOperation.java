@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import ru.gontarenko.values.FinanceOperationType;
-import ru.gontarenko.values.RepeatPeriod;
+import ru.gontarenko.values.Period;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -33,13 +34,13 @@ public class FinanceOperation {
     @NotNull
     Integer accountId;
 
-    @NotNull
     LocalDate date;
 
     @NotNull
     @OneToOne(fetch = FetchType.LAZY)
     Currency currency;
 
+    @Min(value = 1, message = "Must be greater than 0")
     @NotNull
     BigDecimal amount;
 
@@ -49,7 +50,7 @@ public class FinanceOperation {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    RepeatPeriod repeatPeriod;
+    Period period;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)

@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import ru.gontarenko.values.FinanceOperationType;
-import ru.gontarenko.values.RepeatPeriod;
+import ru.gontarenko.values.Period;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,6 +17,6 @@ public class SaveFinanceOperationCommand {
     String currencyCode;
     BigDecimal amount;
     FinanceOperationType type;
-    RepeatPeriod repeatPeriod;
+    Period period;
     String categoryName;
 }

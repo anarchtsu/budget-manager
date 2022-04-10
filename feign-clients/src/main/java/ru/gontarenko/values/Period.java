@@ -1,6 +1,6 @@
 package ru.gontarenko.values;
 
-public enum RepeatPeriod {
+public enum Period {
     NONE,
     DAY,
     MONTH,

@@ -15,7 +15,7 @@ import ru.gontarenko.feignclients.financeservice.dto.SaveFinanceOperationCommand
 import java.time.LocalDate;
 import java.util.List;
 
-@FeignClient(value = "finance-service", path = FinanceOperationClient.PATH)
+@FeignClient(value = "finance-service", path = FinanceOperationClient.PATH, contextId = "finance-operations")
 public interface FinanceOperationClient {
     String PATH = "/api/v1/finance-operations";
 

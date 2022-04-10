@@ -9,6 +9,9 @@ import ru.gontarenko.feignclients.financeservice.dto.SaveFinanceOperationCommand
 import ru.gontarenko.financeservice.domain.FinanceOperation;
 import ru.gontarenko.financeservice.mapper.FinanceOperationMapper;
 import ru.gontarenko.financeservice.repository.FinanceOperationRepository;
+import ru.gontarenko.values.Period;
+
+import javax.validation.ConstraintViolationException;
 
 @Service
 @Transactional
@@ -28,6 +31,8 @@ public class FinanceOperationService {
 
     private FinanceOperation save(FinanceOperation financeOperation, SaveFinanceOperationCommand command) {
         mapper.update(financeOperation, command);
+        if (financeOperation.getPeriod() == Period.NONE && financeOperation.getDate() == null)
+            throw new ConstraintViolationException("Date for non repeatable operation must be not null", null);
         return repository.save(financeOperation);
     }
 
