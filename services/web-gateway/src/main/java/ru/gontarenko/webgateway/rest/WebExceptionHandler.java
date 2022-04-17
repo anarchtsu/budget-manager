@@ -13,6 +13,7 @@ import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
@@ -29,6 +30,7 @@ public class WebExceptionHandler {
     ErrorAttributes errorAttributes;
     ObjectMapper objectMapper;
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(FeignException.NotFound.class)
     public Map<String, Object> handleFeignNotFound(WebRequest request, FeignException.NotFound exception) {
         return getAttributes(
@@ -39,6 +41,7 @@ public class WebExceptionHandler {
         );
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(FeignException.BadRequest.class)
     public Map<String, Object> handleFeignBadRequest(WebRequest request, FeignException.BadRequest exception) {
         return getAttributes(
