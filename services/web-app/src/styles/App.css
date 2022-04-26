@@ -1,11 +1,146 @@
-#nav {
-    background: rgb(200,200,200);
-    background: linear-gradient(0deg, rgba(200,200,200,1) 0%, rgba(0,0,0,1) 100%);
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-#login_div {
-    border: 2px solid blue;
-    border-radius: 20px;
-    margin: 20px;
-    padding: 20px;
+#root {
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+body {
+    background: lightgray;
+}
+
+nav {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 3px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    align-items: flex-start;
+}
+
+nav div {
+    display: flex;
+    column-gap: 10px;
+}
+
+nav div .link {
+    height: 100%;
+}
+
+/* todo Link css */
+
+.link {
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+    outline: none;
+    border: 1px solid transparent;
+    background-color: dodgerblue;
+    padding: 0.5rem 1rem;
+}
+
+.finances {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    column-gap: 50px;
+    background: white;
+    width: 100%;
+    padding: 1rem 2rem 6rem;
+}
+
+.list {
+    overflow-y: scroll;
+    max-height: 440px;
+    scrollbar-width: none;
+}
+
+.list::-webkit-scrollbar {
+    display: none;
+}
+
+.finances__item>p {
+    border-bottom: lightblue 2px solid;
+    padding: 1.5rem 6rem;
+    margin-bottom: 0;
+}
+
+.finances-item {
+    border-bottom: lightgreen 1px solid;
+    padding: 0.2rem 0.3rem;
+}
+
+.finances-item:hover {
+    background-color: #ececec;
+    transition: all 0.2s ease-in-out;
+}
+
+.finances-item__name {
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+.finances-item__value {
+    margin-top: 0;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown__menu {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background-color: darkcyan;
+}
+
+.dropdown__menu.open {
+    display: block;
+}
+.dropdown__menu.open>div {
+    display: flex;
+    flex-direction: column;
+}
+.dropdown__menu.open>div>.link {
+    background-color: transparent;
+}
+
+/* todo hover effect .dropdown__menu.open>div>.link */
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.modal {
+    width: 600px;
+    min-height: 400px;
+    background-color: white;
+    position: relative;
+    z-index: 3;
+}
+
+.modal-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }

@@ -12,9 +12,6 @@ const Register = () => {
         await axios.post('/api/v1/accounts', null, {params:{email, password}}).then((response) => {
             // todo редирект при успехе
         }).catch((error) => {
-            // console.log(error.response.status)
-            // console.log(error.response)
-            // console.log(error.response.data['message'])
             setErrorMsg(error.response.data['message'])
         });
     }
@@ -62,7 +59,7 @@ const Register = () => {
                 <button type="submit" className="btn btn-primary">Sign Up</button>
             </form>
             <p>Already have an Account?<br/>
-                <span className="line"><Link to="/register">Sign In</Link></span>
+                <span className="line"><Link to="/login">Sign In</Link></span>
             </p>
         </div>
     );

@@ -1,47 +1,53 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Link, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import Login from "./pages/Login";
 import Finances from "./components/Finances";
 import Statistics from "./components/Statistics";
 import {AuthContext} from "./context";
-import Dropdown from 'react-bootstrap/Dropdown';
 import Register from "./pages/Register";
 import axios from "./api/Axios";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function Navbar() {
     const {auth, setAuth} = useContext(AuthContext);
-
+    const [dropdownVisible, setDropdownVisible] = useState(false);
+    const toggleMenu = (e) => {
+        e.preventDefault()
+        setDropdownVisible(!dropdownVisible)
+    }
     const logout = async () => {
-        const response = await axios.post("/logout")
-        setAuth(false)
-        localStorage.removeItem('auth')
+        console.log("test")
+        // const response = await axios.post("/logout")
+        // setAuth(false)
+        // localStorage.removeItem('auth')
+        // todo redirect
     }
 
     return (
         <div>
-            <nav className="navbar navbar-expand-lg" id="nav">
-                <div className="container">
-                    <div className="collapse navbar-collapse">
-                        <Link className="nav-link text-light" to="/finances">Finances</Link>
-                        <Link className="nav-link text-light" to="/statistics">Statistics</Link>
+            <nav>
+                <div className="left">
+                    <Link className="link" to="/finances">Finances</Link>
+                    <Link className="link" to="/statistics">Statistics</Link>
+                </div>
+
+                <div className="dropdown right">
+                    <div className="dropdown__title link" onClick={e => toggleMenu(e)}>
+                        Account
                     </div>
-                    <Dropdown>
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
-                            Account
-                        </Dropdown.Toggle>
+                    <div className={`dropdown__menu ${dropdownVisible ? "open" : ""}`}>
                         {auth ?
-                            <Dropdown.Menu>
-                                <Dropdown.Item href="/account">Edit</Dropdown.Item>
-                                <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
-                            </Dropdown.Menu>
+                            <div>
+                                <Link className="link" to="/edit">Edit</Link>
+                                <a className="link" onClick={logout}>Logout</a>
+                            </div>
                             :
-                            <Dropdown.Menu>
-                                <Dropdown.Item href="/login">Login</Dropdown.Item>
-                                <Dropdown.Item href="/register">Register</Dropdown.Item>
-                            </Dropdown.Menu>
+                            <div>
+                                <Link className="link" to="/login">Login</Link>
+                                <Link className="link" to="/register">Register</Link>
+                            </div>
                         }
-                    </Dropdown>
+                    </div>
                 </div>
             </nav>
         </div>
@@ -52,7 +58,7 @@ function DefaultLayout() {
     return (
         <div>
             <Navbar/>
-            <main className="container">
+            <main>
                 <Outlet/>
             </main>
         </div>
@@ -61,7 +67,7 @@ function DefaultLayout() {
 
 const AppRouter = () => {
     const {auth, setAuth} = useContext(AuthContext);
-
+    console.log(auth)
     return (
         <Routes>
             {auth ?

@@ -20,7 +20,7 @@ const Login = () => {
             });
             setAuth(true);
             setEmail('');
-            setPassword('')
+            setPassword('');
             localStorage.setItem('auth', 'true');
         } catch (error) {
             console.log('login error')
@@ -36,12 +36,12 @@ const Login = () => {
     return (
         <div id="login_div">
             <form onSubmit={login}>
-                <div className="form-row">
-                    <div className="form-group col-md-6">
+                <div>
+                    <div>
                         <label htmlFor="email">Email</label>
                         <input
                             type="email"
-                            className="form-control"
+                            // className="form-control"
                             id="email"
                             placeholder="Email"
                             onChange={(e) => {
@@ -51,11 +51,11 @@ const Login = () => {
                             required
                         />
                     </div>
-                    <div className="form-group col-md-6">
+                    <div>
                         <label htmlFor="password">Password</label>
                         <input
                             type="password"
-                            className="form-control"
+                            // className="form-control"
                             id="password"
                             placeholder="Password"
                             onChange={(e) => {
@@ -66,10 +66,10 @@ const Login = () => {
                         />
                     </div>
                 </div>
-                <button type="submit" className="btn btn-primary">Sign in</button>
+                <button type="submit">Sign in</button>
             </form>
             <p>Need an Account?<br/>
-                <span className="line"><Link to="/register">Sign Up</Link></span>
+                <span><Link to="/register">Sign Up</Link></span>
             </p>
         </div>
     );
