@@ -17,7 +17,7 @@ body {
 nav {
     width: 100%;
     padding: 1rem;
-    border-radius: 3px;
+    border-radius: 20px;
     background: white;
     display: flex;
     justify-content: space-between;
@@ -54,6 +54,7 @@ nav div .link {
     background: white;
     width: 100%;
     padding: 1rem 2rem 6rem;
+    border-radius: 20px;
 }
 
 .list {
@@ -66,15 +67,30 @@ nav div .link {
     display: none;
 }
 
-.finances__item>p {
+.finances__item > p {
     border-bottom: lightblue 2px solid;
     padding: 1.5rem 6rem;
     margin-bottom: 0;
 }
 
 .finances-item {
+    position: relative;
     border-bottom: lightgreen 1px solid;
     padding: 0.2rem 0.3rem;
+}
+
+.finances-item > button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.finances-item > button:hover {
+    font-size: 18px;
+    transition: all 0.2s ease-in-out;
 }
 
 .finances-item:hover {
@@ -107,16 +123,17 @@ nav div .link {
 .dropdown__menu.open {
     display: block;
 }
-.dropdown__menu.open>div {
+
+.dropdown__menu.open > div {
     display: flex;
     flex-direction: column;
 }
-.dropdown__menu.open>div>.link {
+
+.dropdown__menu.open > div > .link {
     background-color: transparent;
 }
 
 /* todo hover effect .dropdown__menu.open>div>.link */
-
 
 .modal-overlay {
     position: fixed;
@@ -132,15 +149,68 @@ nav div .link {
 }
 
 .modal {
-    width: 600px;
+    width: 500px;
     min-height: 400px;
     background-color: white;
     position: relative;
     z-index: 3;
+    border-radius: 20px;
+    padding: 1rem;
+}
+
+
+.modal > form {
+    padding-top: 2rem;
+}
+
+.modal > form > div {
+    /* todo нормально отцентровать */
+    width: 60%;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 6.5rem;
+}
+
+.modal > form > div > input {
+    width: 50%;
+}
+
+.modal > form > div > select {
+    width: 50%;
+}
+
+.modal > form > button {
+    margin-top: 2rem;
+    margin-left: 8rem;
+    width: 50%;
+}
+
+.modal__button {
+    border: 2px solid blue;
+    border-radius: 5px;
+    background-color: blue;
+    color: white;
+    font-size: 18px;
+}
+
+.modal__button:hover {
+    box-shadow: 2px 1px 2px 1px black;
 }
 
 .modal-close {
     position: absolute;
     top: 5px;
     right: 5px;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
 }
+
+.finances > button {
+    cursor: pointer;
+    font-size: 20px;
+    background-color: white;
+    border: lightblue 2px solid;
+    border-radius: 40px;
+}
+

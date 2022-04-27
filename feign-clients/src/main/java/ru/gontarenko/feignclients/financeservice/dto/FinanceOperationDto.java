@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class FinanceOperationDto {
     Long id;
     LocalDate date;
+    Integer currencyId;
     String currencyCode;
     BigDecimal amount;
     FinanceOperationType type;

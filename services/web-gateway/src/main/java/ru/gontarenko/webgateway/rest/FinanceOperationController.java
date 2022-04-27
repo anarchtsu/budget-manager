@@ -42,6 +42,8 @@ public class FinanceOperationController {
 
     @PutMapping("{id}")
     FinanceOperationDto update(@PathVariable Long id, @RequestBody SaveFinanceOperationWebCommand webCommand) {
+        System.out.println("id: " + id);
+        System.out.println("SaveFinanceOperationWebCommand: " + webCommand);
         val command = mapper.command(webCommand);
         command.setAccountId(AuthorizedAccount.getId());
         return client.update(id, command);

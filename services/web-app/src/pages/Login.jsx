@@ -12,6 +12,7 @@ const Login = () => {
     const login = async (event) => {
         event.preventDefault();
         try {
+            // todo переписать с then catch
             const response = await axios.post('/login', null, {
                 params: {
                     account_login: email,
@@ -41,7 +42,6 @@ const Login = () => {
                         <label htmlFor="email">Email</label>
                         <input
                             type="email"
-                            // className="form-control"
                             id="email"
                             placeholder="Email"
                             onChange={(e) => {
@@ -55,7 +55,6 @@ const Login = () => {
                         <label htmlFor="password">Password</label>
                         <input
                             type="password"
-                            // className="form-control"
                             id="password"
                             placeholder="Password"
                             onChange={(e) => {

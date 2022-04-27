@@ -5,16 +5,17 @@ import MyModal from "../UI/MyModal/MyModal";
 class FinanceOperation {
     id;
     date;
+    currencyId;
     currencyCode;
     amount;
     type;
     period;
     categoryName;
 
-
-    constructor(id, date, currencyCode, amount, type, period, categoryName) {
+    constructor(id, date, currencyId, currencyCode, amount, type, period, categoryName) {
         this.id = id;
         this.date = date;
+        this.currencyId = currencyId;
         this.currencyCode = currencyCode;
         this.amount = amount;
         this.type = type;
@@ -23,29 +24,30 @@ class FinanceOperation {
     }
 }
 
-const deleteById = (id) => {
-
-}
+const FinanceOperationUrl = '/api/v1/finance-operations'
 
 const Finances = () => {
-    const [finances, setFinances] = useState([]);
-    const [isModalVisible, setModelVisible] = useState(false);
-    const [currentFinanceOperation, setCurrentFinanceOperation] = useState(null);
+    const [finances, setFinances] = useState([])
+    const [isModalVisible, setModelVisible] = useState(false)
+    const [currentFinanceOperation, setCurrentFinanceOperation] = useState(null)
 
-    useEffect(() => {
-        // (async () => {
-        //     await axios.get("/api/v1/finance-operations").then(r => {
-        //         const financeOperations = r.data.map(x => new FinanceOperation(x.id, x.date, x.currencyCode, x.amount, x.type, x.period, x.categoryName));
-        //         console.log(financeOperations)
-        //         setFinances(financeOperations);
-        //     })
-        // })();
-        axios.get("/api/v1/finance-operations").then(r => {
-            const financeOperations = r.data.map(x => new FinanceOperation(x.id, x.date, x.currencyCode, x.amount, x.type, x.period, x.categoryName));
-            console.log(financeOperations)
-            setFinances(financeOperations);
+    const refreshData = () => {
+        axios.get(FinanceOperationUrl).then(r => {
+            const financeOperations = r.data.map(x => new FinanceOperation(
+                x.id,
+                x.date,
+                x.currencyId,
+                x.currencyCode,
+                x.amount,
+                x.type,
+                x.period,
+                x.categoryName
+            ));
+            setFinances(financeOperations)
         })
-    }, [])
+    }
+
+    useEffect(() => refreshData(), [])
 
     const openModal = (e, f) => {
         e.preventDefault()
@@ -53,16 +55,17 @@ const Finances = () => {
         setModelVisible(true)
     }
 
-    const closeModal = (e) => {
-        e.preventDefault()
+    const onModalClose = () => {
         setCurrentFinanceOperation(null)
         setModelVisible(false)
+        refreshData()
     }
 
     const modal = isModalVisible &&
         <MyModal
             financeOperation={currentFinanceOperation}
-            onClose={closeModal}
+            onClose={onModalClose}
+            url={FinanceOperationUrl}
         />
 
     return (
@@ -73,21 +76,31 @@ const Finances = () => {
                     <p>INCOMES</p>
                     <div className="list">
                         {finances.filter(f => f.type === 'INCOME').map(f =>
-                            <div className="finances-item" onClick={e => openModal(e, f)}>
+                            <div key={f.id} className="finances-item" onClick={e => openModal(e, f)}>
                                 <p className="finances-item__name">{f.categoryName}</p>
                                 <p className="finances-item__value">{f.currencyCode + " " + f.amount + " PER " + f.period}</p>
+                                <button onClick={e => {
+                                    e.preventDefault()
+                                    e.stopPropagation()
+                                    axios.delete(FinanceOperationUrl + '/' + f.id).then(r => refreshData())
+                                }}>X</button>
                             </div>
                         )}
                     </div>
                 </div>
-
+                <button className="" onClick={e => openModal(e, null)}>+</button>
                 <div className="finances__item">
                     <p>EXPENSES</p>
                     <div className="list">
                         {finances.filter(f => f.type === 'EXPENSE').map(f =>
-                            <div className="finances-item" onClick={e => openModal(e, f)}>
+                            <div key={f.id} className="finances-item" onClick={e => openModal(e, f)}>
                                 <p className="finances-item__name">{f.categoryName}</p>
                                 <p className="finances-item__value">{f.currencyCode + " " + f.amount + " PER " + f.period}</p>
+                                <button onClick={e => {
+                                    e.preventDefault()
+                                    e.stopPropagation()
+                                    axios.delete(FinanceOperationUrl + '/' + f.id).then(r => refreshData())
+                                }}>X</button>
                             </div>
                         )}
                     </div>

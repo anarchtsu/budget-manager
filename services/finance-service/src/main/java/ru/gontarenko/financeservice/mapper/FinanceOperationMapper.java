@@ -23,6 +23,7 @@ public abstract class FinanceOperationMapper {
     @Autowired
     private CurrencyRepository currencyRepository;
 
+    @Mapping(target = "currencyId", source = "currency.id")
     @Mapping(target = "currencyCode", source = "currency.code")
     @Mapping(target = "categoryName", source = "category.name")
     public abstract FinanceOperationDto dto(FinanceOperation financeOperation);

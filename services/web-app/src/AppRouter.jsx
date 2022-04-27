@@ -17,9 +17,9 @@ function Navbar() {
     }
     const logout = async () => {
         console.log("test")
-        // const response = await axios.post("/logout")
-        // setAuth(false)
-        // localStorage.removeItem('auth')
+        const response = await axios.post("/logout")
+        setAuth(false)
+        localStorage.removeItem('auth')
         // todo redirect
     }
 
