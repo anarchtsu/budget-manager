@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from '../api/Axios';
 import MyModal from "../UI/MyModal/MyModal";
+import FinancesList from "./FinancesList";
 
 class FinanceOperation {
     id;
@@ -24,7 +25,7 @@ class FinanceOperation {
     }
 }
 
-const FinanceOperationUrl = '/api/v1/finance-operations'
+const url = '/api/v1/finance-operations'
 
 const Finances = () => {
     const [finances, setFinances] = useState([])
@@ -32,7 +33,7 @@ const Finances = () => {
     const [currentFinanceOperation, setCurrentFinanceOperation] = useState(null)
 
     const refreshData = () => {
-        axios.get(FinanceOperationUrl).then(r => {
+        axios.get(url).then(r => {
             const financeOperations = r.data.map(x => new FinanceOperation(
                 x.id,
                 x.date,
@@ -65,45 +66,27 @@ const Finances = () => {
         <MyModal
             financeOperation={currentFinanceOperation}
             onClose={onModalClose}
-            url={FinanceOperationUrl}
+            url={url}
         />
 
     return (
         <div>
             <div className="finances">
-                <div className="finances__item">
-                    <p>INCOMES</p>
-                    <div className="list">
-                        {finances.filter(f => f.type === 'INCOME').map(f =>
-                            <div key={f.id} className="finances-item" onClick={e => openModal(e, f)}>
-                                <p className="finances-item__name">{f.categoryName}</p>
-                                <p className="finances-item__value">{f.currencyCode + " " + f.amount + " PER " + f.period}</p>
-                                <button onClick={e => {
-                                    e.preventDefault()
-                                    e.stopPropagation()
-                                    axios.delete(FinanceOperationUrl + '/' + f.id).then(r => refreshData())
-                                }}>X</button>
-                            </div>
-                        )}
-                    </div>
-                </div>
+                <FinancesList
+                    type={'INCOME'}
+                    financeOperations={finances}
+                    openModal={openModal}
+                    url={url}
+                    refreshData={refreshData}
+                />
                 <button className="" onClick={e => openModal(e, null)}>+</button>
-                <div className="finances__item">
-                    <p>EXPENSES</p>
-                    <div className="list">
-                        {finances.filter(f => f.type === 'EXPENSE').map(f =>
-                            <div key={f.id} className="finances-item" onClick={e => openModal(e, f)}>
-                                <p className="finances-item__name">{f.categoryName}</p>
-                                <p className="finances-item__value">{f.currencyCode + " " + f.amount + " PER " + f.period}</p>
-                                <button onClick={e => {
-                                    e.preventDefault()
-                                    e.stopPropagation()
-                                    axios.delete(FinanceOperationUrl + '/' + f.id).then(r => refreshData())
-                                }}>X</button>
-                            </div>
-                        )}
-                    </div>
-                </div>
+                <FinancesList
+                    type={'EXPENSE'}
+                    financeOperations={finances}
+                    openModal={openModal}
+                    url={url}
+                    refreshData={refreshData}
+                />
             </div>
             {/* todo Calendar */}
             {modal}

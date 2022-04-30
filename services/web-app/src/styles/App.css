@@ -132,7 +132,7 @@ nav div .link {
     background-color: transparent;
 }
 
-.dropdown__menu.open>div>.link:hover {
+.dropdown__menu.open > div > .link:hover {
     background-color: cornflowerblue;
 }
 
@@ -215,3 +215,13 @@ nav div .link {
     border-radius: 40px;
 }
 
+.account {
+    display: block;
+    justify-content: space-around;
+    /*align-items: center;*/
+    /*column-gap: 50px;*/
+    background: white;
+    width: 80%;
+    padding: 1rem 2rem 6rem;
+    border-radius: 20px;
+}

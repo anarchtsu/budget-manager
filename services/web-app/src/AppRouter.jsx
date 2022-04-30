@@ -1,13 +1,11 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Link, Navigate, Outlet, Route, Routes, useNavigate} from "react-router-dom";
-import Login from "./pages/Login";
 import Finances from "./components/Finances";
 import Statistics from "./components/Statistics";
 import {AuthContext} from "./context";
-import Register from "./pages/Register";
 import axios from "./api/Axios";
-import NotFoundPage from "./pages/NotFoundPage";
-import Account from "./pages/Account";
+import NotFound from "./components/NotFound";
+import Account from "./components/Account";
 
 function Navbar() {
     const navigate = useNavigate();
@@ -81,15 +79,15 @@ const AppRouter = () => {
                     <Route path="finances" element={<Finances/>}/>
                     <Route path="statistics" element={<Statistics/>}/>
                     {/*<Route path="edit-account" element={<Account/>}/>*/}
-                    <Route path="not-found" element={<NotFoundPage/>}/>
+                    <Route path="not-found" element={<NotFound/>}/>
                     <Route path="*" element={<Navigate to="/not-found"/>}/>
                 </Route>
                 :
                 <Route path="/" element={<DefaultLayout/>}>
-                    <Route index element={<Login/>}/>
-                    <Route path="login" element={<Login/>}/>
-                    <Route path="register" element={<Register/>}/>
-                    <Route path="not-found" element={<NotFoundPage/>}/>
+                    <Route index element={<Account isLogin={true}/>}/>
+                    <Route path="login" element={<Account isLogin={true}/>}/>
+                    <Route path="register" element={<Account isLogin={false}/>}/>
+                    <Route path="not-found" element={<NotFound/>}/>
                     <Route path="*" element={<Navigate to="/not-found"/>}/>
                 </Route>
             }

@@ -1,15 +1,15 @@
 import React, {useContext, useState} from 'react';
-import {AuthContext} from '../context'
-import axios from '../api/Axios';
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {AuthContext} from "../context";
+import axios from "../api/Axios";
 
-const Login = () => {
+const Account = ({isLogin}) => {
     const navigate = useNavigate()
     const {auth, setAuth} = useContext(AuthContext)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [errMessage, setErrMessage] = useState('')
+    const [errMsg, setErrMsg] = useState('')
 
     const login = () => {
         axios.post('/login', null, {
@@ -21,23 +21,52 @@ const Login = () => {
             setAuth(true)
             setEmail('')
             setPassword('')
+            setErrMsg('')
             localStorage.setItem('auth', 'true')
-            console.log('1 auth = ', auth)
+            console.log('auth = ', auth)
             navigate('/finances')
-            console.log('2 auth = ', auth)
-        }).catch(err => {
-            console.log(err)
-            // setErrMessage(err.response.message)
+        }).catch(error => {
+            console.log('error in login')
+            setErrMsg(error.response.data['message'])
         });
     }
 
+    const register = () => {
+        axios.post('/api/v1/accounts', null, {
+            params: {
+                email,
+                password
+            }
+        }).then(r => {
+            setEmail('')
+            setPassword('')
+            setErrMsg('')
+            navigate('/login')
+        }).catch(error => {
+            console.log('error in register')
+            setErrMsg(error.response.data['message'])
+        });
+    }
+
+    const redirect = (url) => {
+        setEmail('')
+        setPassword('')
+        setErrMsg('')
+        navigate(url)
+    }
+
+    const errMsgDiv = errMsg !== '' &&
+        <div>
+            <p color="red">{errMsg}</p>
+        </div>
+
     return (
-        <div id="login_div">
+        <div className="account">
+            {errMsgDiv}
             <form onSubmit={e => {
                 e.preventDefault()
-                login()
+                isLogin ? login() : register()
             }}>
-                <p style={{color: 'red'}}>{errMessage}</p>
                 <div>
                     <label htmlFor="email">Email</label>
                     <input
@@ -64,13 +93,17 @@ const Login = () => {
                         required
                     />
                 </div>
-                <button type="submit">Sign in</button>
+                <button type="submit">{isLogin ? "Sign in" : "Sign Up"}</button>
             </form>
-            <p>Need an Account?<br/>
-                <span><Link to="/register">Sign Up</Link></span>
-            </p>
+            <div>
+                <p>{isLogin ? "Need an Account?" : "Already have an Account?"}</p>
+                <button className="link" onClick={e => {
+                    e.preventDefault()
+                    isLogin ? redirect('/register') : redirect('/login')
+                }}>{isLogin ? "Sign Up" : "Sign In"}</button>
+            </div>
         </div>
     );
 };
 
-export default Login;
+export default Account;

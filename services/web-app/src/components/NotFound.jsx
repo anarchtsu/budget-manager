@@ -1,12 +1,11 @@
 import React from 'react';
 
-const Account = () => {
-
+const NotFound = () => {
     return (
         <div>
-            EditAccount
+            NotFountPage
         </div>
     );
 };
 
-export default Account;
+export default NotFound;
