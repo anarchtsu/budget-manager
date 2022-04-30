@@ -34,8 +34,6 @@ nav div .link {
     height: 100%;
 }
 
-/* todo Link css */
-
 .link {
     cursor: pointer;
     color: white;
@@ -44,6 +42,7 @@ nav div .link {
     border: 1px solid transparent;
     background-color: dodgerblue;
     padding: 0.5rem 1rem;
+    border-radius: 5px;
 }
 
 .finances {
@@ -133,7 +132,9 @@ nav div .link {
     background-color: transparent;
 }
 
-/* todo hover effect .dropdown__menu.open>div>.link */
+.dropdown__menu.open>div>.link:hover {
+    background-color: cornflowerblue;
+}
 
 .modal-overlay {
     position: fixed;

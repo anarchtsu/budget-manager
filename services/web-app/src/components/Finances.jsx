@@ -70,7 +70,6 @@ const Finances = () => {
 
     return (
         <div>
-            {/* todo Add button */}
             <div className="finances">
                 <div className="finances__item">
                     <p>INCOMES</p>
