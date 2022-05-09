@@ -14,21 +14,20 @@ services:
     networks:
       - postgres
 
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4
-    #    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-      - pgadmin:/var/lib/pgadmin
-    ports:
-      - "5050:80"
-    networks:
-      - postgres
-
+#  pgadmin:
+#    container_name: pgadmin
+#    image: dpage/pgadmin4
+#    #    restart: always
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+#      PGADMIN_CONFIG_SERVER_MODE: 'False'
+#    volumes:
+#      - pgadmin:/var/lib/pgadmin
+#    ports:
+#      - "5050:80"
+#    networks:
+#      - postgres
 
   zipkin:
     image: openzipkin/zipkin
@@ -38,38 +37,114 @@ services:
     networks:
       - spring
 
-  zookeeper:
-    image: 'bitnami/zookeeper:3'
-    ports:
-      - '2181:2181'
-    volumes:
-      - 'zookeeper_data:/bitnami'
-    environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes
-
-  kafka:
-    image: 'bitnami/kafka:2'
+#  zookeeper:
+#    image: 'bitnami/zookeeper:3'
+#    ports:
+#      - '2181:2181'
+#    volumes:
+#      - 'zookeeper_data:/bitnami'
+#    environment:
+#      - ALLOW_ANONYMOUS_LOGIN=yes
+#
+#  kafka:
+#    image: 'bitnami/kafka:2'
+##    restart: always
+#    ports:
+#      - '9092:9092'
+#    volumes:
+#      - 'kafka_data:/bitnami'
+#    environment:
+#      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+#      - ALLOW_PLAINTEXT_LISTENER=yes
+#    depends_on:
+#      - zookeeper
+#
+#  schema_registry:
+#    image: 'confluentinc/cp-schema-registry'
 #    restart: always
-    ports:
-      - '9092:9092'
-    volumes:
-      - 'kafka_data:/bitnami'
+#    ports:
+#      - '8081:8081'
+#    environment:
+#      - SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL=zookeeper:2181
+#      - SCHEMA_REGISTRY_HOST_NAME=localhost
+
+  eureka-server:
+    image: anarchtsu/eureka-server:latest
+    container_name: eureka-server
     environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8761:8761"
+    networks:
+      - spring
     depends_on:
-      - zookeeper
+      - zipkin
 
-  schema_registry:
-    image: 'confluentinc/cp-schema-registry'
-    restart: always
-    ports:
-      - '8081:8081'
+  web-gateway:
+    image: anarchtsu/web-gateway:latest
+    container_name: web-gateway
     environment:
-      - SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL=zookeeper:2181
-      - SCHEMA_REGISTRY_HOST_NAME=localhost
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8881:8881"
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - eureka-server
 
-  # todo add my services
+  account-service:
+    image: anarchtsu/account-service:latest
+    container_name: account-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8882:8882"
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - postgres
+      - zipkin
+      - eureka-server
+
+  finance-service:
+    image: anarchtsu/finance-service:latest
+    container_name: finance-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8883:8883"
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - postgres
+      - zipkin
+      - eureka-server
+
+  statistics-service:
+    image: anarchtsu/statistics-service:latest
+    container_name: statistics-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8884:8884"
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - postgres
+      - zipkin
+      - eureka-server
+
+  web-app:
+    build: ./services/web-app
+    container_name: web-app
+    ports:
+    - "3000:3000"
+    stdin_open: true
+    tty: true
 
 networks:
   postgres:

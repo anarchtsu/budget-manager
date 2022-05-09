@@ -28,7 +28,7 @@
         <org.springdoc.version>1.6.4</org.springdoc.version>
         <spring.cloud-version>2020.0.5</spring.cloud-version>
         <flyway.version>8.4.2</flyway.version>
-        <image>anarchtsu/${artifactId}/${project.artifactId}:${project.version}</image>
+        <image>anarchtsu/${project.artifactId}:${project.version}</image>
     </properties>
 
     <dependencyManagement>
