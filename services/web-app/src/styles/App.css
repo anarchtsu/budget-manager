@@ -218,10 +218,32 @@ nav div .link {
 .account {
     display: block;
     justify-content: space-around;
-    /*align-items: center;*/
-    /*column-gap: 50px;*/
     background: white;
     width: 80%;
     padding: 1rem 2rem 6rem;
     border-radius: 20px;
+}
+
+.statistics-from {
+    display: flex;
+    background-color: white;
+    border-radius: 15px;
+    padding: 1rem 1rem;
+}
+
+.statistics {
+    background-color: white;
+    border-radius: 15px;
+    padding: 1rem 1rem;
+}
+.statistics-filters {
+    display: flex;
+}
+.statistics-bar {
+
+}
+
+.chartWrapper {
+    width: 100%;
+    overflow-x: auto;
 }

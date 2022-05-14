@@ -28,7 +28,7 @@ const MyModal = ({onClose, financeOperation, url}) => {
                     e.preventDefault()
                     form.id === null ?
                         axios.post(url, form).then(r => onClose()) :
-                        axios.put(url +'/' + form.id, form).then(r => onClose())
+                        axios.put(url + '/' + form.id, form).then(r => onClose())
                 }}>
                     <div>
                         <label htmlFor="date">Date</label>
@@ -103,8 +103,7 @@ const MyModal = ({onClose, financeOperation, url}) => {
                                         ...prevState,
                                         period: e.target.value
                                     }))
-                                }
-                                }
+                                }}
                                 value={form.period}
                         >
                             <option value="NONE">NONE</option>
