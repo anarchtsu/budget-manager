@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {AuthContext} from "../context";
 import axios from "../api/Axios";
@@ -18,12 +18,12 @@ const Account = ({isLogin}) => {
                 account_password: password
             }
         }).then(r => {
+            localStorage.setItem('auth', 'true')
             setAuth(true)
             setEmail('')
             setPassword('')
             setErrMsg('')
-            localStorage.setItem('auth', 'true')
-            console.log('auth = ', auth)
+            // console.log('Account auth = ', auth)
             navigate('/finances')
         }).catch(error => {
             console.log('error in login')
@@ -61,14 +61,14 @@ const Account = ({isLogin}) => {
         </div>
 
     return (
-        <div className="account">
+        <div className="card account">
             {errMsgDiv}
             <form onSubmit={e => {
                 e.preventDefault()
                 isLogin ? login() : register()
             }}>
                 <div>
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email">Эл. почта:</label>
                     <input
                         type="email"
                         id="email"
@@ -81,7 +81,7 @@ const Account = ({isLogin}) => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Пароль:</label>
                     <input
                         type="password"
                         id="password"
@@ -93,15 +93,12 @@ const Account = ({isLogin}) => {
                         required
                     />
                 </div>
-                <button type="submit">{isLogin ? "Sign in" : "Sign Up"}</button>
-            </form>
-            <div>
-                <p>{isLogin ? "Need an Account?" : "Already have an Account?"}</p>
-                <button className="link" onClick={e => {
+                <a className="action-link" onClick={e => {
                     e.preventDefault()
                     isLogin ? redirect('/register') : redirect('/login')
-                }}>{isLogin ? "Sign Up" : "Sign In"}</button>
-            </div>
+                }}>{isLogin ? "Зарегистрироваться?" : "Авторизоваться?"}</a>
+                <button type="submit">{isLogin ? "Войти" : "Создать аккаунт"}</button>
+            </form>
         </div>
     );
 };

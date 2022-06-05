@@ -1,5 +1,5 @@
 import './styles/App.css';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {BrowserRouter} from "react-router-dom";
 import {AuthContext} from "./context";
 import AppRouter from "./AppRouter";

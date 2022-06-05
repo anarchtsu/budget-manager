@@ -19,7 +19,7 @@ const MyModal = ({onClose, financeOperation, url}) => {
     return (
         <div className="modal-overlay">
             <div className="modal">
-                <button className="modal-close modal__button" onClick={e => {
+                <button className="modal-close" onClick={e => {
                     e.preventDefault()
                     onClose()
                 }}>X
@@ -31,7 +31,7 @@ const MyModal = ({onClose, financeOperation, url}) => {
                         axios.put(url + '/' + form.id, form).then(r => onClose())
                 }}>
                     <div>
-                        <label htmlFor="date">Date</label>
+                        <label htmlFor="date">Дата</label>
                         <input
                             type="date"
                             name="date"
@@ -46,7 +46,7 @@ const MyModal = ({onClose, financeOperation, url}) => {
                         />
                     </div>
                     <div>
-                        <label htmlFor="currencyId">Currency</label>
+                        <label htmlFor="currencyId">Валюта</label>
                         <select id="currencyId" name="currencyId"
                                 onChange={e => {
                                     e.preventDefault()
@@ -63,7 +63,7 @@ const MyModal = ({onClose, financeOperation, url}) => {
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="amount">Amount</label>
+                        <label htmlFor="amount">Сумма</label>
                         <input
                             type="number"
                             name="amount"
@@ -79,7 +79,7 @@ const MyModal = ({onClose, financeOperation, url}) => {
                         />
                     </div>
                     <div>
-                        <label htmlFor="type">Operation Type</label>
+                        <label htmlFor="type">Тип операции</label>
                         <select id="type" name="type"
                                 onChange={e => {
                                     e.preventDefault()
@@ -90,12 +90,12 @@ const MyModal = ({onClose, financeOperation, url}) => {
                                 }}
                                 value={form.type}
                         >
-                            <option value="INCOME">INCOME</option>
-                            <option value="EXPENSE">EXPENSE</option>
+                            <option value="INCOME">Доход</option>
+                            <option value="EXPENSE">Расход</option>
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="period">Period</label>
+                        <label htmlFor="period">Повтор операции</label>
                         <select id="type" name="period"
                                 onChange={e => {
                                     e.preventDefault()
@@ -106,14 +106,14 @@ const MyModal = ({onClose, financeOperation, url}) => {
                                 }}
                                 value={form.period}
                         >
-                            <option value="NONE">NONE</option>
-                            <option value="DAY">DAY</option>
-                            <option value="MONTH">MONTH</option>
-                            <option value="YEAR">YEAR</option>
+                            <option value="NONE">Единоразовая</option>
+                            <option value="DAY">Раз в день</option>
+                            <option value="MONTH">Раз в месяц</option>
+                            <option value="YEAR">Раз в год</option>
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="categoryName">Category</label>
+                        <label htmlFor="categoryName">Название</label>
                         <input
                             type="text"
                             name="categoryName"
@@ -128,7 +128,7 @@ const MyModal = ({onClose, financeOperation, url}) => {
                             required
                         />
                     </div>
-                    <button className="modal__button" type="submit">{form.id === null ? "Create" : "Update"}</button>
+                    <button type="submit">{form.id === null ? "Создать" : "Обновить"}</button>
                 </form>
             </div>
         </div>

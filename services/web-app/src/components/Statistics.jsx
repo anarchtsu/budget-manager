@@ -46,12 +46,11 @@ const Statistics = () => {
         })
     }
 
-
     const statisticsBar = dailyStatistics && text &&
         <StatisticsView dailyStatistics={dailyStatistics} text={text}/>
 
     return (
-        <div className="statistics">
+        <div className="card statistics">
             <div className="statistics-filters">
                 <form onSubmit={e => {
                     e.preventDefault()
@@ -84,6 +83,11 @@ const Statistics = () => {
                     <button type="submit">Рассчитать</button>
                 </form>
             </div>
+            <hr/>
+            <div>
+                Тут инфа общий доход/расход
+            </div>
+            <hr/>
             <div className="statistics-bar">
                 {statisticsBar}
             </div>

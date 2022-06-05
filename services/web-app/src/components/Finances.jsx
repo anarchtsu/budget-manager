@@ -71,7 +71,7 @@ const Finances = () => {
 
     return (
         <div>
-            <div className="finances">
+            <div className="card finances">
                 <FinancesList
                     type={'INCOME'}
                     financeOperations={finances}
@@ -79,7 +79,7 @@ const Finances = () => {
                     url={url}
                     refreshData={refreshData}
                 />
-                <button className="" onClick={e => openModal(e, null)}>+</button>
+                <button onClick={e => openModal(e, null)}>Добавить запись</button>
                 <FinancesList
                     type={'EXPENSE'}
                     financeOperations={finances}
@@ -88,7 +88,6 @@ const Finances = () => {
                     refreshData={refreshData}
                 />
             </div>
-            {/* todo Calendar */}
             {modal}
         </div>
     );

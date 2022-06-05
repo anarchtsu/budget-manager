@@ -12,17 +12,27 @@
 
 body {
     background: lightgray;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.card {
+    display: block;
+    background: #efefd0;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 20px;
 }
 
 nav {
     width: 100%;
     padding: 1rem;
     border-radius: 20px;
-    background: white;
+    background: #efefd0;
     display: flex;
     justify-content: space-between;
     margin-bottom: 2rem;
     align-items: flex-start;
+    font-weight: bold;
 }
 
 nav div {
@@ -32,15 +42,19 @@ nav div {
 
 nav div .link {
     height: 100%;
+    transition: all 0.2s ease-in-out;
+}
+
+nav div .link:hover {
+    background-color: #ff6b35;
 }
 
 .link {
     cursor: pointer;
-    color: white;
+    color: black;
     text-decoration: none;
     outline: none;
     border: 1px solid transparent;
-    background-color: dodgerblue;
     padding: 0.5rem 1rem;
     border-radius: 5px;
 }
@@ -50,10 +64,8 @@ nav div .link {
     justify-content: space-around;
     align-items: flex-start;
     column-gap: 50px;
-    background: white;
     width: 100%;
     padding: 1rem 2rem 6rem;
-    border-radius: 20px;
 }
 
 .list {
@@ -70,6 +82,8 @@ nav div .link {
     border-bottom: lightblue 2px solid;
     padding: 1.5rem 6rem;
     margin-bottom: 0;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .finances-item {
@@ -80,21 +94,23 @@ nav div .link {
 
 .finances-item > button {
     position: absolute;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
     right: 0;
-    border: none;
-    background-color: white;
+    background: 0;
     cursor: pointer;
+    border: 1px solid transparent;
 }
 
 .finances-item > button:hover {
-    font-size: 18px;
-    transition: all 0.2s ease-in-out;
+    /*color: #ff6b35;*/
+    border-color: black;
 }
 
 .finances-item:hover {
-    background-color: #ececec;
+    color: #ff6b35;
     transition: all 0.2s ease-in-out;
+    cursor: pointer;
 }
 
 .finances-item__name {
@@ -104,36 +120,6 @@ nav div .link {
 
 .finances-item__value {
     margin-top: 0;
-}
-
-.dropdown {
-    position: relative;
-}
-
-.dropdown__menu {
-    display: none;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
-    background-color: darkcyan;
-}
-
-.dropdown__menu.open {
-    display: block;
-}
-
-.dropdown__menu.open > div {
-    display: flex;
-    flex-direction: column;
-}
-
-.dropdown__menu.open > div > .link {
-    background-color: transparent;
-}
-
-.dropdown__menu.open > div > .link:hover {
-    background-color: cornflowerblue;
 }
 
 .modal-overlay {
@@ -152,25 +138,24 @@ nav div .link {
 .modal {
     width: 500px;
     min-height: 400px;
-    background-color: white;
+    background-color: #efefd0;
     position: relative;
     z-index: 3;
     border-radius: 20px;
     padding: 1rem;
+    font-weight: bold;
 }
-
 
 .modal > form {
     padding-top: 2rem;
 }
 
 .modal > form > div {
-    /* todo нормально отцентровать */
-    width: 60%;
+    width: 80%;
     padding: 8px;
     display: flex;
     justify-content: space-between;
-    margin-left: 6.5rem;
+    margin: 0 auto;
 }
 
 .modal > form > div > input {
@@ -201,28 +186,39 @@ nav div .link {
 
 .modal-close {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    margin-top: 0.5rem;
-    margin-right: 0.5rem;
-}
-
-.finances > button {
-    cursor: pointer;
-    font-size: 20px;
-    background-color: white;
-    border: lightblue 2px solid;
-    border-radius: 40px;
+    top: 10px;
+    right: 15px;
 }
 
 .account {
-    display: block;
-    justify-content: space-around;
-    background: white;
-    width: 80%;
-    padding: 1rem 2rem 6rem;
-    border-radius: 20px;
+
 }
+
+.account form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    width: 400px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.account form div {
+    display: flex;
+    column-gap: 15px;
+    align-items: center;
+}
+
+.account form div input {
+    padding: 0.5rem 1rem;
+    flex: 1 0 200px;
+}
+
+.account form div label {
+    width: 80px;
+    font-weight: 700;
+}
+
 
 .statistics-from {
     display: flex;
@@ -232,18 +228,40 @@ nav div .link {
 }
 
 .statistics {
-    background-color: white;
-    border-radius: 15px;
     padding: 1rem 1rem;
 }
-.statistics-filters {
-    display: flex;
-}
-.statistics-bar {
 
+.statistics-filters form {
+    padding: 1rem;
+    display: flex;
+    font-weight: bold;
+    column-gap: 30px;
+    align-items: center;
+}
+
+.statistics-filters form label {
+    margin-right: 1rem;
 }
 
 .chartWrapper {
     width: 100%;
     overflow-x: auto;
+}
+
+.action-link {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+    outline: none;
+    border: 1px solid transparent;
+    background-color: #ff6b35;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
 }

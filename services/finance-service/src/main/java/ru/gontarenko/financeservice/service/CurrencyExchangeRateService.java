@@ -25,7 +25,7 @@ import java.net.http.HttpResponse;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CurrencyExchangeRateService {
     private static final long ONE_HOUR = 3_600_000;
-    private static CurrencyExchangeRate currencyExchangeCache = new CurrencyExchangeRate();
+    private static final CurrencyExchangeRate currencyExchangeCache = new CurrencyExchangeRate();
     ObjectMapper objectMapper;
     HttpClient httpClient;
     HttpRequest request = HttpRequest.newBuilder(URI.create("https://www.cbr-xml-daily.ru/latest.js"))
