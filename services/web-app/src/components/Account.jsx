@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {AuthContext} from "../context";
 import axios from "../api/Axios";
@@ -23,11 +23,9 @@ const Account = ({isLogin}) => {
             setEmail('')
             setPassword('')
             setErrMsg('')
-            // console.log('Account auth = ', auth)
             navigate('/finances')
         }).catch(error => {
-            console.log('error in login')
-            setErrMsg(error.response.data['message'])
+            setErrMsg("Неверный логин или пароль")
         });
     }
 
@@ -43,7 +41,6 @@ const Account = ({isLogin}) => {
             setErrMsg('')
             navigate('/login')
         }).catch(error => {
-            console.log('error in register')
             setErrMsg(error.response.data['message'])
         });
     }

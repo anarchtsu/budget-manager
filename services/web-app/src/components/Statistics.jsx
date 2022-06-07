@@ -1,15 +1,7 @@
 import React, {useState} from "react";
 import axios from "../api/Axios";
 import StatisticsView from "./StatisticsView";
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-} from 'chart.js';
+import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip,} from 'chart.js';
 
 ChartJS.register(
     CategoryScale,
@@ -29,6 +21,8 @@ const Statistics = () => {
 
     const [text, setText] = useState();
     const [dailyStatistics, setDailyStatistics] = useState();
+    const [expensesAmount, setExpensesAmount] = useState('')
+    const [incomesAmount, setIncomesAmount] = useState('')
 
     const getStatistics = () => {
         axios.get(url, {
@@ -38,8 +32,9 @@ const Statistics = () => {
                 currencyId
             }
         }).then(r => {
-            console.log(r.data.dailyStatistics)
             setDailyStatistics(r.data.dailyStatistics)
+            setExpensesAmount(r.data.expensesAmount)
+            setIncomesAmount(r.data.incomesAmount)
             setText('Статистика за период (' + dateFrom + ' - ' + dateTo + ')')
         }).catch(err => {
             // todo
@@ -83,11 +78,17 @@ const Statistics = () => {
                     <button type="submit">Рассчитать</button>
                 </form>
             </div>
-            <hr/>
-            <div>
-                Тут инфа общий доход/расход
-            </div>
-            <hr/>
+            {expensesAmount !== '' && incomesAmount !== '' ?
+                <div>
+                    <hr/>
+                    <p>Общий доход: {incomesAmount} руб.</p>
+                    <p>Общий расход: {expensesAmount} руб.</p>
+                    <hr/>
+                </div>
+                :
+                <div>
+                </div>
+            }
             <div className="statistics-bar">
                 {statisticsBar}
             </div>

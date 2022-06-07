@@ -27,7 +27,7 @@ import java.util.Optional;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class WebExceptionHandler {
     private static final Map<String, String> CONSTRAINT_MESSAGES = new HashMap<>() {{
-        put("account_email_idx", "Email already taken");
+        put("account_email_idx", "Пользователь с такой эл. почтой уже существует.");
     }};
 
     ErrorAttributes errorAttributes;
